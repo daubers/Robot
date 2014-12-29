@@ -11,9 +11,9 @@ cage_width = 15;
 cage_depth = 17.3;
 cage_height = 11.5;
 
-module mmgb_holes(){
-	cylinder(r=bolt_diameter/2, h=wing_height);
-	translate([hole_seperation,0,0]) cylinder(r=bolt_diameter/2, h=wing_height);
+module mmgb_holes(height=wing_height){
+	cylinder(r=bolt_diameter/2, h=height, $fn=50);
+	translate([hole_seperation,0,0]) cylinder(r=bolt_diameter/2, h=height, $fn=50);
 }
 
 //mmgb_holes();
