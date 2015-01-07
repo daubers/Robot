@@ -3,6 +3,9 @@
  * Author: Matt Daubney
  * 01/01/2015
  */
+
+//Include the pololu encoder library
+#include <PololuWheelEncoders.h>
  
 //Pin definitions
 int MTR_STDBY=6;
@@ -12,7 +15,13 @@ int MTR_B2=3;
 int MTR_B1=2;
 int MTR_A_PWM=8;
 int MTR_B_PWM=7;
- 
+
+int ENC_A_A=9;
+int ENC_A_B=10;
+int ENC_B_A=11;
+int ENC_B_B=12;
+PololuWheelEncoders encoder;
+
 void setup(){
   pinMode(MTR_STDBY, OUTPUT);
   pinMode(MTR_A1, OUTPUT);
@@ -30,8 +39,19 @@ void setup(){
   Serial.write("Setting A and B PWM to 50%");
   analogWrite(MTR_A_PWM, 128);
   analogWrite(MTR_B_PWM, 128);
+  encoder.init(ENC_A_A,ENC_A_B,ENC_B_A,ENC_B_B);
 }
 
+
+
 void loop(){
-   
+   llegirPos();
  }
+ 
+void llegirPos() {
+//  Serial.print( RightEncoder.read(), DEC );
+ Serial.print( encoder.getCountsAndResetM1(), DEC );
+ Serial.print(", ");
+ Serial.print( encoder.getCountsAndResetM2(), DEC );
+ Serial.println();
+}
