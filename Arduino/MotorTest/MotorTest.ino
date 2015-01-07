@@ -9,18 +9,19 @@
  
 //Pin definitions
 int MTR_STDBY=6;
-int MTR_A1=4;
-int MTR_A2=5;
-int MTR_B2=3;
-int MTR_B1=2;
-int MTR_A_PWM=8;
-int MTR_B_PWM=7;
+int MTR_A1=2;
+int MTR_A2=3;
+int MTR_B2=4;
+int MTR_B1=5;
+int MTR_A_PWM=10;
+int MTR_B_PWM=11;
 
-int ENC_A_A=9;
-int ENC_A_B=10;
-int ENC_B_A=11;
-int ENC_B_B=12;
-PololuWheelEncoders encoder;
+int ENC_A_A=8;
+int ENC_A_B=9;
+int ENC_B_A=255;
+int ENC_B_B=255;
+
+PololuWheelEncoders enc;
 
 void setup(){
   pinMode(MTR_STDBY, OUTPUT);
@@ -30,16 +31,16 @@ void setup(){
   pinMode(MTR_B2, OUTPUT);
   pinMode(MTR_A_PWM, OUTPUT);
   pinMode(MTR_B_PWM, OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
   digitalWrite(MTR_STDBY, true);
-  digitalWrite(MTR_A1,false);
-  digitalWrite(MTR_A2,true);
+  digitalWrite(MTR_A1,true);
+  digitalWrite(MTR_A2,false);
   digitalWrite(MTR_B1,true);
   digitalWrite(MTR_B2,false);
   Serial.write("Setting A and B PWM to 50%");
-  analogWrite(MTR_A_PWM, 128);
-  analogWrite(MTR_B_PWM, 128);
-  encoder.init(ENC_A_A,ENC_A_B,ENC_B_A,ENC_B_B);
+  //analogWrite(MTR_A_PWM, 0);
+  //analogWrite(MTR_B_PWM, 0);
+  enc.init(7,8,12,13);
 }
 
 
@@ -50,8 +51,8 @@ void loop(){
  
 void llegirPos() {
 //  Serial.print( RightEncoder.read(), DEC );
- Serial.print( encoder.getCountsAndResetM1(), DEC );
- Serial.print(", ");
- Serial.print( encoder.getCountsAndResetM2(), DEC );
- Serial.println();
+  Serial.println(enc.getCountsM1()*(360.0/24.0));
+  Serial.println(enc.checkErrorM1());
+  //Serial.println(PololuWheelEncoders::getCountsM2());
+  delay(1000);
 }
