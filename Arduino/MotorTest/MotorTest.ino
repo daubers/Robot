@@ -6,6 +6,11 @@
 
 //Include the pololu encoder library
 #include <PololuWheelEncoders.h>
+//Encoder measures 24 steps per revolution so
+//each step is (pi*48)/24 mm in length
+//which is 6.28mm in rotation of the wheel
+//which means that the robot turns roughly 0.084 radians
+//per step which is 4.8 degrees!
  
 //Pin definitions
 int MTR_STDBY=6;
