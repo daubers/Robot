@@ -22,14 +22,33 @@ module WheelWell(h=16){
 	}
 }
 
+module base_plate(){
+	difference(){
+		cylinder(r=robot_diameter/2, h=acrylic_depth, $fn=100);
+		translate([-1*robot_diameter/8,-1*(robot_diameter/2)+10,0]) holePlacement(boardType=UNO)
+					cylinder(r = 1, h = 10, $fn = 32);
+		translate([(robot_diameter/2)-(robot_diameter/4/2),0,0]) rotate([0,0,180]) WheelWell();
+		translate([-1*((robot_diameter/2)-(robot_diameter/4/2)),0,0]) WheelWell();
+	
+		rotate([0,0,45]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45+90]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45 + 180]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45+270]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
 
-difference(){
-	cylinder(r=robot_diameter/2, h=acrylic_depth, $fn=100);
-	translate([-1*robot_diameter/8,-1*(robot_diameter/2)+10,0]) holePlacement(boardType=MEGA2560)
-					cylinder(r = mountingHoleRadius + 1.5, h = 10, $fn = 32);
-	translate([(robot_diameter/2)-(robot_diameter/4/2),0,0]) rotate([0,0,180]) WheelWell();
-	translate([-1*((robot_diameter/2)-(robot_diameter/4/2)),0,0]) WheelWell();
-	
-	
+	}
 }
-translate([0,0,acrylic_depth]) color([1,0,0]) board_carrier();
+//translate([0,0,acrylic_depth]) color([1,0,0]) board_carrier();
+
+module top_plate() {
+	difference(){
+		cylinder(r=robot_diameter/2, h=acrylic_depth, $fn=100);
+		rotate([0,0,45]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45+90]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45 + 180]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+		rotate([0,0,45+270]) translate([(robot_diameter/2)-(robot_diameter/8),0,0]) cylinder(r=1, h=30, $fn = 32);
+	}
+}
+
+//projection(cut=true) base_plate();
+//translate([0,0,20]) top_plate();
+projection(cut=true) top_plate();
