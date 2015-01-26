@@ -7,12 +7,21 @@
 // Command defintions
 byte ENABLE_INTERRUPT=1;
 byte SET_INTERRUPT_DISTANCE=2;
-byte READ_INTERRUPT_DISTANCE=4;
-byte READ_MAX_MIN=8;
+byte READ_INTERRUPT_DISTANCE=3;
+byte SENSOR_DATA=4;
+
+#define REG_MAP_SIZE 4
+#define SLAVE_ADDRESS  0x01
+//data
+byte data[8];
+
 
 void setup(){
-  Wire.begin();        // join i2c bus (address optional for master)
+  Wire.begin(SLAVE_ADDRESS);        // join i2c bus 
+  
   Wire.onReceive(receiveEvent); // register event
+  Wire.onRequest(requestEvent);
+  
   Serial.begin(9600);           // start serial for output
 }
 
@@ -32,4 +41,8 @@ void receiveEvent(int howMany)
   }
   int x = Wire.read();    // receive byte as an integer
   Serial.println(x);         // print the integer
+}
+
+void requestEvent(){
+  Wire.write(data, REG_MAP_SIZE);  //Set the buffer up to send all 14 bytes of dat
 }
